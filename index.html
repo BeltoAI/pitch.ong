@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlyOS | Pre-Seed Deck — Belto Inc.</title>
+<meta name="description" content="SlyOS by Belto Inc. — Edge AI for Heavy Industry. $1M Pre-Seed.">
+<meta name="theme-color" content="#FF4D00">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050505;--fg:#c8c8c8;--accent:#FF4D00;--dim:#555;--border:#1a1a1a;--green:#4ade80;--blue:#60a5fa;--yellow:#facc15;--red:#f87171;--purple:#c084fc;--cyan:#22d3ee}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6}
+::selection{background:var(--accent);color:#fff}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+#boot{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s ease}
+#boot.done{opacity:0;pointer-events:none}
+#boot-text{text-align:left;max-width:520px;padding:20px}
+#boot-text .line{opacity:0;transform:translateY(4px);transition:all .35s ease;white-space:pre}
+#boot-text .line.show{opacity:1;transform:translateY(0)}
+.b-a{color:var(--accent);font-weight:700}.b-d{color:var(--dim)}.b-g{color:var(--green)}.b-w{color:#fff;font-weight:700}
+.cursor{display:inline-block;width:7px;height:14px;background:var(--accent);animation:blink 1s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pump { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
+.pump-arm { display: inline-block; transform-origin: 100% 100%; animation: pump 2.5s infinite ease-in-out; }
+#shell{display:none;height:100vh;height:100dvh;flex-direction:column}
+#shell.active{display:flex}
+#topbar{height:40px;min-height:40px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid var(--border);background:#0a0a0a;gap:8px}
+.dots{display:flex;gap:6px;flex-shrink:0}.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+#topbar-center{flex:1;text-align:center;font-size:10px;color:var(--dim);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:.04em}
+#topbar-right{display:flex;gap:10px;font-size:10px;flex-shrink:0}
+#topbar-right a{color:var(--dim);text-decoration:none;transition:color .2s}
+#topbar-right a:hover{color:var(--accent)}
+#output{flex:1;overflow-y:auto;padding:16px;scroll-behavior:smooth}
+.msg{margin-bottom:14px;max-width:820px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.msg-user{color:var(--accent)}.msg-user::before{content:'> ';color:var(--dim)}
+.msg-bot h2{color:#fff;font-size:14px;font-weight:700;margin:10px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+.msg-bot h3{color:var(--accent);font-size:12px;font-weight:600;margin:8px 0 3px}
+.msg-bot p{margin:3px 0;font-size:12px}
+.msg-bot a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,77,0,.3)}
+.msg-bot a:hover{color:#fff;border-color:#fff}
+.msg-bot code{background:#111;padding:1px 5px;border-radius:3px;font-size:11px;color:var(--cyan)}
+.hl{color:var(--accent);font-weight:600}.dm{color:var(--dim)}
+.d{border:none;border-top:1px solid var(--border);margin:10px 0}
+.card{background:#0a0a0a;border:1px solid var(--border);border-radius:5px;padding:10px;margin:6px 0;transition:border-color .2s}
+.card:hover{border-color:var(--accent)}
+.card-t{color:#fff;font-weight:600;font-size:12px}
+.card-m{color:var(--dim);font-size:9px;margin-top:1px;letter-spacing:.03em;text-transform:uppercase}
+.card-d{color:var(--fg);font-size:11px;margin-top:3px;line-height:1.5}
+.st{display:inline-block;background:#111;border:1px solid var(--border);padding:2px 7px;border-radius:3px;margin:2px 3px 2px 0;font-size:10px}
+.st-l{color:var(--dim)}.st-v{color:#fff;font-weight:600}
+.tag{display:inline-block;font-size:8px;padding:1px 5px;border-radius:2px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-right:3px}
+.tag-ok{background:rgba(74,222,128,.1);color:var(--green);border:1px solid rgba(74,222,128,.18)}
+.tag-soon{background:rgba(255,255,255,.03);color:var(--dim);border:1px solid var(--border)}
+.tag-rec{background:rgba(255,77,0,.1);color:var(--accent);border:1px solid rgba(255,77,0,.18)}
+.tag-blue{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.18)}
+.tag-red{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.18)}
+.cb{background:#0a0a0a;border:1px solid var(--border);border-radius:5px;padding:10px;margin:6px 0;overflow-x:auto;font-size:11px;line-height:1.5;white-space:pre}
+.cm{color:var(--dim)}.kw{color:var(--purple)}.str{color:var(--green)}.fn{color:var(--cyan)}
+.ascii{font-size:10px;line-height:1.3;color:var(--dim);margin:6px 0;overflow-x:auto;white-space:pre}
+.ascii .aa{color:var(--accent)}.ascii .ag{color:var(--green)}.ascii .ab{color:var(--blue)}.ascii .aw{color:#fff}.ascii .ar{color:var(--red)}
+.bar-wrap{margin:4px 0}.bar-label{font-size:10px;color:var(--dim);display:flex;justify-content:space-between;margin-bottom:2px}
+.bar{height:6px;border-radius:3px;background:#111;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;width:0;transition:width 1s ease}
+.mgrid{display:grid;grid-template-columns:1fr;gap:6px;margin:6px 0}
+#suggestions{padding:4px 12px 6px;display:flex;flex-wrap:wrap;gap:5px;min-height:30px}
+.sug{background:#111;border:1px solid var(--border);color:var(--fg);font-family:inherit;font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.sug:hover{border-color:var(--accent);color:var(--accent);background:#0f0800}
+#inputbar{display:flex;align-items:center;gap:6px;padding:10px 12px;border-top:1px solid var(--border);background:#0a0a0a}
+#pp{color:var(--accent);font-weight:700;font-size:14px;user-select:none;flex-shrink:0}
+#prompt{flex:1;background:transparent;border:none;outline:none;color:var(--fg);font-family:inherit;font-size:13px;caret-color:var(--accent);min-width:0}
+#prompt::placeholder{color:#333}
+#sbtn{background:none;border:1px solid var(--border);color:var(--dim);font-family:inherit;font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;transition:all .15s;flex-shrink:0}
+#sbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tile-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}
+.tile{background:#0a0a0a;border:1px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:10px;text-align:left;font-family:inherit;color:var(--fg);position:relative;overflow:hidden}
+.tile:hover{border-color:var(--accent);background:#0d0700;transform:translateY(-1px)}
+.tile:active{transform:translateY(0)}
+.tile-icon{font-size:18px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:5px;flex-shrink:0;line-height:1}
+.tile-body{flex:1;min-width:0}
+.tile-label{color:#fff;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.tile-desc{color:var(--dim);font-size:9px;margin-top:2px;line-height:1.3}
+.tile-arrow{position:absolute;top:10px;right:10px;color:var(--border);font-size:10px;transition:color .2s}
+.tile:hover .tile-arrow{color:var(--accent)}
+.tile-primary{border-color:rgba(255,77,0,.25);background:rgba(255,77,0,.04)}
+.tile-primary:hover{background:rgba(255,77,0,.08);border-color:var(--accent)}
+.tile-primary .tile-icon{background:rgba(255,77,0,.12);color:var(--accent)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:5px;overflow:hidden;margin:8px 0}
+.vs-col{padding:12px}.vs-col:first-child{border-right:1px solid var(--border)}
+.vs-h{font-size:13px;font-weight:700;margin-bottom:8px;text-align:center}
+.vs-iv{color:#fff;font-weight:600;font-size:11px;margin-top:4px}.vs-id{color:var(--dim);font-size:10px}
+.tbl{width:100%;border-collapse:collapse;margin:8px 0;font-size:10px}
+.tbl th{text-align:left;padding:6px 8px;border-bottom:2px solid var(--border);color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.tbl td{padding:6px 8px;border-bottom:1px solid var(--border)}
+.tbl .hl-col{background:rgba(96,165,250,.05)}.tbl .chk{color:var(--green)}.tbl .dsh{color:var(--dim)}
+@media(min-width:600px){.mgrid{grid-template-columns:1fr 1fr}.tile-grid{grid-template-columns:1fr 1fr}#output{padding:20px 24px 8px}#suggestions{padding:4px 24px 6px}#inputbar{padding:10px 20px}#topbar{padding:0 16px}.ascii{font-size:11px}}
+@media(min-width:900px){.mgrid{grid-template-columns:1fr 1fr 1fr}#output{padding:20px 32px 8px}}
+@media(max-width:599px){#topbar-right{display:none}body{font-size:12px}.card{padding:8px}.cb{font-size:10px;padding:8px}.ascii{font-size:8px;line-height:1.2}#topbar-center{font-size:9px}.tile-grid{grid-template-columns:1fr 1fr}.tile{padding:8px 10px;gap:8px}.tile-icon{width:28px;height:28px;font-size:15px}.tile-label{font-size:10px}.tile-desc{font-size:8px}.vs{grid-template-columns:1fr}.vs-col:first-child{border-right:none;border-bottom:1px solid var(--border)}}
+</style>
+</head>
+<body>
+<div id="boot"><div id="boot-text"></div></div>
+<div id="shell">
+<div id="topbar">
+  <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+  <div id="topbar-center"><span style="color:var(--accent);font-weight:600">[$1M PRE-SEED]</span> slyos@belto ~ investor-deck v1.0</div>
+  <div id="topbar-right">
+    <a href="https://belto.world" target="_blank">belto.world</a>
+    <a href="https://zenodo.org/records/19041422" target="_blank">research</a>
+    <a href="https://impactentrepreneur.com/why-the-cloud-is-stifling-ai-innovation/" target="_blank">press</a>
+    <a href="https://calendly.com/belto-support/30min" target="_blank">book a call</a>
+    <a href="mailto:emil.shirokikh@belto.world">email</a>
+  </div>
+</div>
+<div id="output"></div>
+<div id="suggestions"></div>
+<div id="inputbar">
+  <span id="pp">&#10095;</span>
+  <input id="prompt" type="text" placeholder="type a command or click above..." autocomplete="off" autofocus spellcheck="false">
+  <button id="sbtn">&#8594;</button>
+</div>
+</div>
+<script>
+var BL=[{t:'<span class="b-d">BELTO INC. // CONFIDENTIAL</span>',d:0},{t:'<span style="color:var(--accent)">████████████████████████</span> <span class="b-g">ready</span>',d:500},{t:'',d:750},{t:'<span class="b-w" style="font-size:16px">SlyOS — Edge AI for Heavy Industry.</span>',d:900},{t:'<span class="b-a">$1.0M Pre-Seed Round</span>',d:1200},{t:'',d:1500},{t:'<span class="b-d">Type </span><span class="b-a">help</span><span class="b-d"> or click to explore.</span><span class="cursor"></span>',d:1700}];
+function runBoot(){var c=document.getElementById('boot-text');BL.forEach(function(l){var d=document.createElement('div');d.className='line';d.innerHTML=l.t||'&nbsp;';c.appendChild(d);setTimeout(function(){d.classList.add('show')},l.d)});setTimeout(function(){document.getElementById('boot').classList.add('done');setTimeout(function(){document.getElementById('boot').style.display='none';document.getElementById('shell').classList.add('active');showWelcome();document.getElementById('prompt').focus()},600)},3000)}
+var O=function(){return document.getElementById('output')};
+function add(h,c){c=c||'msg-bot';var d=document.createElement('div');d.className='msg '+c;d.innerHTML=h;O().appendChild(d);O().scrollTop=O().scrollHeight;setTimeout(function(){d.querySelectorAll('.bar-fill[data-w]').forEach(function(b){b.style.width=b.dataset.w})},50);return d}
+function sug(a){var el=document.getElementById('suggestions');el.innerHTML='';a.forEach(function(s){var b=document.createElement('button');b.className='sug';b.textContent=s;b.onclick=function(){go(s)};el.appendChild(b)})}
+function tile(t){var e=document.createElement('button');e.className='tile'+(t.p?' tile-primary':'');e.innerHTML='<div class="tile-icon" style="background:'+t.bg+';color:'+t.ic+'">'+t.icon+'</div><div class="tile-body"><div class="tile-label">'+t.l+'</div><div class="tile-desc">'+t.d+'</div></div><span class="tile-arrow">&#8250;</span>';e.onclick=function(){go(t.cmd)};return e}
+function tiles(arr,parent){var g=document.createElement('div');g.className='tile-grid';arr.forEach(function(t){g.appendChild(tile(t))});(parent||O().lastElementChild).appendChild(g)}
+
+function showWelcome(){
+add('<div class="ascii"><span class="aa">  ███████╗██╗  ██╗   ██╗ ██████╗ ███████╗\n  ██╔════╝██║  ╚██╗ ██╔╝██╔═══██╗██╔════╝\n  ███████╗██║   ╚████╔╝ ██║   ██║███████╗\n  ╚════██║██║    ╚██╔╝  ██║   ██║╚════██║\n  ███████║███████╗██║   ╚██████╔╝███████║\n  ╚══════╝╚══════╝╚═╝    ╚═════╝ ╚══════╝</span>\n  <span class="aw" style="font-size:14px;letter-spacing:4px;margin-left:2px">SLYOS - PITCH</span>\n  <span class="b-d">Edge AI for Heavy Industry. Absolute operational resilience.</span></div>'+
+'<div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:6px"><span class="st"><span class="st-v" style="color:var(--accent)">$1.0M Pre-Seed</span></span><span class="st"><span class="st-v">Palo Alto / Stanford</span></span><span class="st"><span class="st-v" style="color:var(--green)">Raising</span></span></div><hr class="d"><p class="dm" style="font-size:10px;margin-bottom:4px">Explore the deck:</p>');
+tiles([
+  {cmd:'problem',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Problem',d:'Cloud AI fails in the field'},
+  {cmd:'solution',icon:'&#9670;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Solution',d:'SlyOS middleware & architecture',p:1},
+  {cmd:'market',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'The Market',d:'Downtime ROI, TAM & landscape'},
+  {cmd:'execution',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'The Playbook',d:'LOI strategy & the $1M ask',p:1},
+]);
+var ex=document.createElement('div');ex.style.cssText='margin-top:8px;display:flex;flex-wrap:wrap;gap:4px';
+[{cmd:'contact',l:'contact us'},{cmd:'demo',l:'book a call'},{cmd:'paper',l:'research paper'},{cmd:'article',l:'press coverage'}].forEach(function(s){var b=document.createElement('button');b.className='sug';b.textContent=s.l;b.onclick=function(){go(s.cmd)};ex.appendChild(b)});
+O().lastElementChild.appendChild(ex);sug(['clear']);O().scrollTop=O().scrollHeight}
+
+// ═══ LEVEL 1: CATEGORY MENUS ═══
+function cmdProblem(){
+add('<h2>The Problem</h2><p>Cloud AI fails in the field. When an offshore worker loses connectivity, NPT skyrockets and centralized GPUs are wasted on chatbots.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+tiles([
+  {cmd:'bottleneck',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Connectivity Gap',d:'Why the cloud breaks offshore'},
+  {cmd:'offshore',icon:'&#9881;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Case: $500k NPT',d:'Bleeding money on downtime'},
+  {cmd:'compute',icon:'&#9733;',bg:'rgba(192,132,252,.12)',ic:'var(--purple)',l:'Case: GPU Crunch',d:'Wasting H100s on manuals'},
+]);sug(['↩ menu','clear'])}
+
+function cmdSolution(){
+add('<h2>The Solution</h2><p>SlyOS intercepts prompts at the SDK level and routes them to local silicon on rugged field devices. Cloud is a fallback, not the default.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+tiles([
+  {cmd:'product',icon:'&#9641;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Product',d:'Edge SDK + 1000-page RAG',p:1},
+  {cmd:'routing',icon:'&#8644;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'Smart Routing',d:'Decision engine rules'},
+  {cmd:'architecture',icon:'&#9881;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Under the Hood',d:'3-layer ecosystem'},
+  {cmd:'deploy',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Deploy in 60s',d:'Pipeline + code sample'},
+]);sug(['↩ menu','clear'])}
+
+function cmdMarket(){
+add('<h2>The Market</h2><p>Enterprise AI requires offline resilience. We capture this market with 93%+ margins by proving immediate ROI through downtime reduction.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+tiles([
+  {cmd:'economics',icon:'$',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Unit Economics',d:'NPT ROI vs $50k Pilot',p:1},
+  {cmd:'landscape',icon:'&#9776;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Landscape',d:'vs. Ollama, Zetic, RunAnywhere'},
+  {cmd:'moat',icon:'&#9733;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'Defensibility',d:'Why big tech can\'t replicate this'},
+  {cmd:'tam',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'TAM & Segments',d:'$468B across Heavy Industry'},
+]);sug(['↩ menu','clear'])}
+
+function cmdExecution(){
+add('<h2>The 14-Month Playbook</h2><p>Enterprise B2B requires aggressive sequencing. You don\'t build and hope they buy; you get them to commit on paper, raise, and build exactly what they agreed to pay for.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+tiles([
+  {cmd:'validation',icon:'1',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Phase 1: Validation',d:'Demo & secure non-binding LOI'},
+  {cmd:'raise',icon:'2',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'Phase 2: $1M Raise',d:'Fund the 6-month core build'},
+  {cmd:'build',icon:'3',bg:'rgba(192,132,252,.12)',ic:'var(--purple)',l:'Phase 3: Engineering',d:'Build exact LOI constraints'},
+  {cmd:'poc',icon:'4',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'Phase 4-5: POC & Expand',d:'$50k Pilot to Fleet Rollout',p:1},
+]);sug(['↩ menu','clear'])}
+
+// ═══ LEVEL 2: CONTENT ═══
+function cmdBottleneck(){
+add('<h2>The Connectivity Bottleneck</h2>'+
+'<div class="mgrid"><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">1.</span> <span class="card-t">Offshore Dead-Zones</span><div class="card-d">Remote sites and oil rigs lack reliable Wi-Fi. Cloud-dependent apps break immediately.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">2.</span> <span class="card-t">600ms+ Lag</span><div class="card-d">Network round-trips kill real-time agentic workflows needed for diagnostics.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">3.</span> <span class="card-t">Enterprise IP Leakage</span><div class="card-d">Regulated infrastructure data and schematics cannot hit third-party servers.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">4.</span> <span class="card-t">HSE / Exposure Time</span><div class="card-d">Workers wait in extreme weather conditions while manual pages struggle to load.</div></div></div>'+
+'<div class="ascii">  <span class="aw">TODAY:</span> Field App --<span class="ar">100%</span>--> Worker --<span class="ar">100%</span>--> <span class="ar">Cloud API (Fails offline)</span>\n  <span class="aw">SLYOS:</span> Field App ----------> Worker --<span class="ag"> 90% local</span> / <span class="ab">10% cloud</span></div>');
+sug(['offshore','compute','↩ problem','↩ menu','clear'])}
+
+function cmdOffshore(){
+add('<h2>Case: <span style="color:var(--green)">Offshore NPT</span></h2>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-l">NPT Cost</span> <span class="st-v" style="color:var(--red)">$500,000/hr</span></span><span class="st"><span class="st-l">Connectivity</span> <span class="st-v" style="color:var(--red)">0%</span></span><span class="st"><span class="st-l">Time-to-Resolution</span> <span class="st-v" style="color:var(--green)">-30%</span></span></div>'+
+'<div class="ascii" style="text-align:center; padding:10px 0; font-weight:bold;">\n          <span class="aa pump-arm" style="line-height:1">,===____</span>\n        <span class="aa">/      ||</span>\n<span class="ab">≈≈≈≈≈≈≈≈</span><span class="aw">[######]</span><span class="ab">≈≈≈≈≈≈≈≈</span>\n        <span class="ar">|    |</span>\n        <span class="ar">|    |</span>\n</div>'+
+'<p>If a compressor faults and your technician loses Wi-Fi, they are stuck. Every hour they spend walking back to the control room to search a PDF manual costs the company half a million dollars in Non-Productive Time (NPT).</p>'+
+'<div class="card" style="border-color:rgba(74,222,128,.2)"><span class="card-t" style="color:var(--green)">SlyOS Impact</span><div class="card-d">SlyOS puts an offline, reasoning AI directly on their existing iPad. They resolve faults 30% faster, stopping the bleed of costly downtime and directly improving HSE metrics.</div></div>');
+sug(['compute','unit economics','↩ problem','↩ menu','clear'])}
+
+function cmdCompute(){
+add('<h2>Case: <span style="color:var(--purple)">GPU Bottleneck</span></h2>'+
+'<p>The energy sector is facing a massive AI compute crunch, with data center GPUs (like H100s) seeing <span style="color:#fff;font-weight:600">36-to-52-week lead times</span>. Centralized supercomputers must be reserved for high-value tasks.</p>'+
+'<div class="mgrid"><div class="card"><span class="card-t">Centralized Waste</span><div class="card-d">It is a massive waste of energy and expensive compute to use a Houston server farm to answer a chatbot question about a safety manual.</div></div><div class="card"><span class="card-t">Seismic Priority</span><div class="card-d">O&G companies need their GPUs for 3D seismic imaging and complex reservoir simulation.</div></div></div>'+
+'<div class="card" style="border-color:rgba(96,165,250,.2)"><span class="card-t" style="color:var(--blue)">SlyOS Impact</span><div class="card-d">SlyOS offloads 90% of NLP compute directly to the edge, freeing up your centralized GPUs for high-value reservoir modeling.</div></div>');
+sug(['offshore','the product','↩ problem','↩ menu','clear'])}
+
+function cmdProduct(){
+add('<h2>The Product: Offline RAG</h2>'+
+'<p>While massive corporate databases require hybrid routing, <span class="hl">a 1,000-page safety manual</span> runs entirely offline on the edge.</p>'+
+'<div class="ascii">  App -----> <span class="ag">Field iPad (SlyOS)</span> --<span class="ag">INT4 Local LLM</span>--> <span class="ag">15-45 tokens/sec</span>\n                               \\--<span class="ab">Cloud Sync</span>----> <span class="ab">when Wi-Fi restores</span></div>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v" style="color:var(--green)">10-100MB footprint</span></span><span class="st"><span class="st-v" style="color:var(--green)">&lt;50ms UFS load</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Zero dead-zone downtime</span></span></div>'+
+'<div class="cb"><span class="kw">const</span> agent = <span class="kw">await</span> <span class="fn">SlyOS.init</span>(<span class="str">"quantum-3B-int4"</span>);\n<span class="kw">await</span> agent.<span class="fn">loadLocalRAG</span>(<span class="str">"compressor-manual-v2"</span>);\n<span class="kw">const</span> result = <span class="kw">await</span> agent.<span class="fn">ask</span>(<span class="str">"Fault code 402?"</span>);</div>');
+sug(['smart routing','under the hood','deploy in 60s','↩ solution','↩ menu','clear'])}
+
+function cmdRouting(){
+add('<h2>Smart Traffic Routing</h2><p class="dm">The Decision Engine applies absolute rules + smart balancing per-prompt.</p>'+
+'<div class="mgrid"><div class="card"><span class="card-m">ALWAYS LOCAL</span><div class="card-d" style="margin-top:4px">No Wi-Fi / Dead-zone &#8594; iPad<br>Proprietary schematics &#8594; iPad<br>1000-page manuals &#8594; iPad</div></div><div class="card"><span class="card-m">CLOUD FALLBACK</span><div class="card-d" style="margin-top:4px">Massive seismic data &#8594; cloud<br>Device overheating &#8594; cloud<br>All rules customizable via dashboard</div></div></div>');
+sug(['the product','under the hood','↩ solution','↩ menu','clear'])}
+
+function cmdArchitecture(){
+add('<h2>Under the Hood</h2>'+
+'<div class="card" style="border-style:dashed"><span class="card-m">CLOUD DASHBOARD</span><div class="card-d">Enterprise data sync (when connectivity is restored) + global fleet analytics.</div></div>'+
+'<p style="text-align:center;color:var(--dim);margin:2px 0">&#8595;&#8593;</p>'+
+'<div class="card" style="border-color:rgba(255,77,0,.3);background:rgba(255,77,0,.03)"><span class="card-m" style="color:var(--accent)">SLYOS ENGINE</span><div class="card-d">Write Once, Run Anywhere (iOS/Android/Web). Smart traffic cop decides local vs. cloud per-prompt. Instant local vector DB swapping in &lt;50ms.</div></div>'+
+'<p style="text-align:center;color:var(--dim);margin:2px 0">&#8595;&#8593;</p>'+
+'<div class="card"><span class="card-m">RUGGED FIELD DEVICE</span><div class="card-d">Device health checks (battery, memory, temp). Native integration with existing field iPads and tablets. Under 100MB per manual.</div></div>');
+sug(['the product','smart routing','↩ solution','↩ menu','clear'])}
+
+function cmdDeploy(){
+add('<h2>From 0 to Generation in &lt;60s</h2>'+
+'<div class="ascii">  <span class="aw">SELECT</span> ---> <span class="aw">SYNC</span> ---> <span class="aa">DEFINE</span> ---> <span class="aw">PLUG</span> ---> <span class="ag">LIVE</span>\n  1-Click    Auto-     Smart      NPM/        Generation\n  Import     Finetune  Logic      CocoaPods   <span class="ag">Active</span></div>'+
+'<div class="bar-wrap"><div class="bar-label"><span>0s</span><span style="color:var(--green)">60s &#10003;</span></div><div class="bar" style="height:8px"><div class="bar-fill" data-w="100%" style="background:linear-gradient(90deg,var(--accent),var(--green))"></div></div></div>'+
+'<p style="margin-top:6px;font-size:11px">Or scaffold a full chatbot instantly: <code>npx @belto/create-local-chat</code></p>');
+sug(['the product','under the hood','↩ solution','↩ menu','clear'])}
+
+function cmdEconomics(){
+add('<h2>Unit Economics & ROI</h2>'+
+'<div class="mgrid" style="grid-template-columns:1fr 1fr 1fr"><div class="card"><span class="tag tag-red">STATUS QUO</span><div style="color:var(--fg);font-size:16px;font-weight:700;margin:4px 0">$500k/hr</div><div class="card-m">NPT Cost</div><div class="card-d">Worker offline downtime bleeding capital.</div></div><div class="card" style="border-color:rgba(96,165,250,.3)"><span class="tag tag-blue">SLYOS PILOT</span><div style="color:var(--blue);font-size:16px;font-weight:700;margin:4px 0">$50,000</div><div class="card-m">45-Day Paid POC</div><div class="card-d">Prove offline manual querying &lt;3s.</div></div><div class="card" style="border-color:rgba(74,222,128,.3)"><span class="tag tag-green">ENTERPRISE</span><div style="color:var(--green);font-size:16px;font-weight:700;margin:4px 0">$150k+/yr</div><div class="card-m">Fleet-wide licensing</div><div class="card-d">Multi-year contract covering 5,000 devices.</div></div></div>'+
+'<p class="dm" style="font-size:9px">Saving $10k on APIs is a rounding error to Chevron. Eliminating downtime is their biggest priority.</p>');
+sug(['tam','landscape','↩ market','↩ menu','clear'])}
+
+function cmdLandscape(){
+add('<h2>Competitive Landscape</h2>'+
+'<table class="tbl"><thead><tr><th>Capability</th><th>Ollama</th><th>Zetic</th><th>RunAnywhere</th><th class="hl-col" style="color:var(--blue)">SlyOS</th></tr></thead><tbody><tr><td>Local Model Execution</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Hardware Acceleration</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Cloud-to-Edge Routing</td><td class="dsh">—</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Multi-Device Orchestration</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Rugged Device Mgmt</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Offline Context Swapping</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr></tbody></table>'+
+'<p class="dm" style="font-size:10px">Competitors run models. <span style="color:#fff">SlyOS deploys, manages, and monitors</span> edge AI across millions of disconnected devices.</p>');
+sug(['moat','economics','↩ market','↩ menu','clear'])}
+
+function cmdMoat(){
+add('<h2>Defensibility Moat</h2><p class="dm">Why big tech can\'t replicate this.</p>'+
+'<div class="vs"><div class="vs-col" style="background:rgba(255,255,255,.01)"><div style="font-size:9px;color:var(--dim);text-transform:uppercase;font-weight:600;margin-bottom:4px">MISCONCEPTION</div><div style="color:#fff;font-weight:600;font-size:11px">"Apple & Google will own edge AI."</div><div class="card-d" style="margin-top:4px">Siri/Gemini are OS-level consumer assistants. They force devs to surrender UX and data.</div></div><div class="vs-col" style="background:rgba(255,77,0,.02)"><div style="font-size:9px;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:4px">SLYOS REALITY</div><div style="color:#fff;font-weight:600;font-size:11px">Enterprises want isolated, embedded AI.</div><div class="card-d" style="margin-top:4px;color:var(--accent)">SlyOS operates inside the app boundary. O&G companies keep 100% data ownership on their rugged devices.</div></div></div>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-v">Cross-platform parity</span></span><span class="st"><span class="st-v">Zero data leakage</span></span><span class="st"><span class="st-v">Native UX ownership</span></span></div>');
+sug(['landscape','tam','↩ market','↩ menu','clear'])}
+
+function cmdTAM(){
+add('<h2>TAM & Market Segments</h2>'+
+'<div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><span class="st"><span class="st-l">TAM</span> <span class="st-v" style="color:var(--blue);font-size:14px">$468B</span></span><span class="st"><span class="st-l">target ARR</span> <span class="st-v" style="color:var(--blue);font-size:14px">$10B</span></span><span class="st"><span class="st-l">NPU units</span> <span class="st-v">143M+ shipping</span></span></div>'+
+'<table class="tbl"><thead><tr><th>Vertical</th><th>Targets</th><th>Edge Unlock</th></tr></thead><tbody><tr><td style="color:#fff;font-weight:600">Oil & Gas</td><td><span class="tag tag-ok">Chevron</span><span class="tag tag-ok">Exxon</span></td><td>Offline rig diagnostics</td></tr><tr><td style="color:#fff;font-weight:600">Mining & Heavy Ind.</td><td><span class="tag tag-ok">BHP</span><span class="tag tag-ok">Rio Tinto</span></td><td>Zero-latency schematics</td></tr><tr><td style="color:#fff;font-weight:600">Defense & Aero</td><td><span class="tag tag-blue">Lockheed</span><span class="tag tag-blue">Boeing</span></td><td>Secure air-gapped AI</td></tr><tr><td style="color:#fff;font-weight:600">Mobility</td><td><span class="tag tag-soon">Tesla</span><span class="tag tag-soon">Ford</span></td><td>Real-time hardware access</td></tr></tbody></table>'+
+'<p class="dm" style="font-size:10px">TAM focuses heavily on heavy industry, field ops, and disconnected environments.</p>');
+sug(['economics','landscape','↩ market','↩ menu','clear'])}
+
+function cmdValidation(){
+add('<h2>Phase 1: The "Vaporware" LOI (Months 1-2)</h2>'+
+'<p>We do not need a finished O&G product to get an LOI. We use our Tesla MCU3 demo to prove technical feasibility to internal IT/App teams at O&G companies.</p>'+
+'<div class="card" style="border-color:rgba(255,255,255,.2)"><span class="card-t">The Pitch to VP of Engineering</span><div class="card-d">"Look what we did to a locked-down car. We can do the exact same thing to your field iPads so your RAG manuals work offline."</div></div>'+
+'<div class="card" style="border-color:rgba(74,222,128,.2)"><span class="card-t" style="color:var(--green)">The Goal</span><div class="card-d">A non-binding Letter of Intent (LOI) stating: <em>"If SlyOS can achieve X latency on Y hardware offline, we will run a Paid POC for $50k."</em></div></div>');
+sug(['raise','build','poc','↩ execution','↩ menu','clear'])}
+
+function cmdRaise(){
+add('<h2>Phase 2: The Pre-Seed Raise (Months 3-4)</h2>'+
+'<p>With the LOI signed, we pitch deep-tech and B2B VCs with a bulletproof narrative.</p>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v" style="color:var(--blue)">Stanford Team</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Hardware Proof</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Signed LOI</span></span></div>'+
+'<div class="card" style="border-color:rgba(96,165,250,.2)"><span class="card-t" style="color:var(--blue)">The VC Pitch</span><div class="card-d">"We have a Stanford/expert team, hard technical proof (Tesla demo), and a signed LOI from an O&G Company waiting for the tech. We are raising $1M to fund the 6-month build."</div></div>');
+sug(['validation','build','poc','↩ execution','↩ menu','clear'])}
+
+function cmdBuild(){
+add('<h2>Phase 3: Heads Down Build (Months 5-9)</h2>'+
+'<p>We take the VC money and build the core SlyOS SDK. We do not overbuild. We build <span style="color:#fff;font-weight:600">exactly the constraints outlined in the LOI</span> success criteria. Nothing more.</p>'+
+'<div class="mgrid"><div class="card"><span class="card-t">Core Routing</span><div class="card-d">Engine that intercepts requests and forces local NPU execution.</div></div><div class="card"><span class="card-t">Memory Opt</span><div class="card-d">Ensure 1000-page RAG footprints stay within 10-100MB on UFS 4.0.</div></div><div class="card"><span class="card-t">SDK API</span><div class="card-d">Clean, plug-and-play integration for existing iOS/Android enterprise apps.</div></div></div>');
+sug(['validation','raise','poc','↩ execution','↩ menu','clear'])}
+
+function cmdPOC(){
+add('<h2>Phase 4 & 5: Paid POC to Fleet Rollout</h2>'+
+'<p>Never do a free pilot in enterprise. If they aren\'t willing to pay $30k–$50k for a 45-day POC, they don\'t actually have the budget for a full rollout.</p>'+
+'<div class="cb" style="font-size:9px">MONTH               |1|2|3|4|5|6|7|8|9|10|11|12|13|14\n--------------------|-|-|-|-|-|-|-|-|-|--|--|--|--|--\nPHASE 1: VALIDATION |█|█| | | | | | | |  |  |  |  |  \nPHASE 2: FUNDRAISE  | | |█|█| | | | | |  |  |  |  |  \nPHASE 3: ENGINEERING| | | | |█|█|█|█|█|  |  |  |  |  \nPHASE 4: PAID POC   | | | | | | | | | |█ |█ |  |  |  \nPHASE 5: EXPAND     | | | | | | | | | |  |  |█ |█ |█ </div>'+
+'<div class="card" style="border-color:rgba(255,77,0,.2)"><span class="card-t" style="color:var(--accent)">Binary Success Criteria</span><div class="card-d">"The SDK queries a 1,000-page manual in &lt; 3 seconds offline without crashing the iPad." Once passed, the $50k pilot converts into a multi-year, six-figure enterprise licensing contract.</div></div>');
+sug(['validation','raise','build','↩ execution','↩ menu','clear'])}
+
+// ═══ ROUTER ═══
+function go(cmd){
+  cmd=cmd.toLowerCase().trim();
+  if(!cmd)return;
+  add(cmd,'msg-user');
+  document.getElementById('prompt').value='';
+  setTimeout(function(){
+    if(cmd==='help'||cmd==='menu'||cmd==='↩ menu') showWelcome();
+    else if(cmd==='clear'){O().innerHTML='';showWelcome();}
+    else if(cmd==='problem'||cmd==='↩ problem') cmdProblem();
+    else if(cmd==='solution'||cmd==='↩ solution') cmdSolution();
+    else if(cmd==='market'||cmd==='↩ market') cmdMarket();
+    else if(cmd==='execution'||cmd==='↩ execution') cmdExecution();
+    else if(cmd==='bottleneck') cmdBottleneck();
+    else if(cmd==='case: offshore'||cmd==='offshore') cmdOffshore();
+    else if(cmd==='case: compute'||cmd==='compute') cmdCompute();
+    else if(cmd==='product'||cmd==='the product') cmdProduct();
+    else if(cmd==='routing'||cmd==='smart routing') cmdRouting();
+    else if(cmd==='architecture'||cmd==='under the hood') cmdArchitecture();
+    else if(cmd==='deploy'||cmd==='deploy in 60s') cmdDeploy();
+    else if(cmd==='economics'||cmd==='unit economics') cmdEconomics();
+    else if(cmd==='landscape') cmdLandscape();
+    else if(cmd==='moat'||cmd==='defensibility') cmdMoat();
+    else if(cmd==='tam'||cmd==='tam & segments') cmdTAM();
+    else if(cmd==='validation'||cmd==='phase 1: validation') cmdValidation();
+    else if(cmd==='raise'||cmd==='phase 2: raise') cmdRaise();
+    else if(cmd==='build'||cmd==='phase 3: build') cmdBuild();
+    else if(cmd==='poc'||cmd==='phase 4-5: poc & expand'||cmd==='phase 4: poc') cmdPOC();
+    else {
+      add('Command not found: '+cmd+'. Type <span class="hl">menu</span> to start over.');
+      sug(['menu','clear']);
+    }
+  }, 150);
+}
+
+document.getElementById('prompt').addEventListener('keydown',function(e){
+  if(e.key==='Enter') go(this.value);
+});
+document.getElementById('sbtn').onclick = function(){
+  go(document.getElementById('prompt').value);
+};
+
+window.onload = runBoot;
+</script>
+</body>
+</html>
