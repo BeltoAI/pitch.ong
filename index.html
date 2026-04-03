@@ -31,6 +31,7 @@ body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',monospace;
 #topbar{height:40px;min-height:40px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid var(--border);background:#0a0a0a;gap:8px}
 .dots{display:flex;gap:6px;flex-shrink:0}.dot{width:10px;height:10px;border-radius:50%}
 .dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+#topbar-animation { flex-shrink: 0; font-size: 8px; font-weight: bold; color: var(--accent); white-space: pre; line-height: 1; }
 #topbar-center{flex:1;text-align:center;font-size:10px;color:var(--dim);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:.04em}
 #topbar-right{display:flex;gap:10px;font-size:10px;flex-shrink:0}
 #topbar-right a{color:var(--dim);text-decoration:none;transition:color .2s}
@@ -107,22 +108,29 @@ body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',monospace;
 <div id="boot"><div id="boot-text"></div></div>
 <div id="shell">
 <div id="topbar">
-  <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
-  <div id="topbar-center"><span style="color:var(--accent);font-weight:600">[$1M PRE-SEED]</span> slyos@belto ~ investor-deck v1.0</div>
-  <div id="topbar-right">
-    <a href="https://belto.world" target="_blank">belto.world</a>
-    <a href="https://zenodo.org/records/19041422" target="_blank">research</a>
-    <a href="https://impactentrepreneur.com/why-the-cloud-is-stifling-ai-innovation/" target="_blank">press</a>
-    <a href="https://calendly.com/belto-support/30min" target="_blank">book a call</a>
-    <a href="mailto:emil.shirokikh@belto.world">email</a>
-  </div>
+  <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+  <div id="topbar-animation">
+,===____
+/      ||
+[######]
+|    |
+|    |
+</div>
+  <div id="topbar-center"><span style="color:var(--accent);font-weight:600">[$1M PRE-SEED]</span> slyos@belto ~ investor-deck v1.0</div>
+  <div id="topbar-right">
+    <a href="https://belto.world" target="_blank">belto.world</a>
+    <a href="https://zenodo.org/records/19041422" target="_blank">research</a>
+    <a href="https://impactentrepreneur.com/why-the-cloud-is-stifling-ai-innovation/" target="_blank">press</a>
+    <a href="https://calendly.com/belto-support/30min" target="_blank">book a call</a>
+    <a href="mailto:emil.shirokikh@belto.world">email</a>
+  </div>
 </div>
 <div id="output"></div>
 <div id="suggestions"></div>
 <div id="inputbar">
-  <span id="pp">&#10095;</span>
-  <input id="prompt" type="text" placeholder="type a command or click above..." autocomplete="off" autofocus spellcheck="false">
-  <button id="sbtn">&#8594;</button>
+  <span id="pp">&#10095;</span>
+  <input id="prompt" type="text" placeholder="type a command or click above..." autocomplete="off" autofocus spellcheck="false">
+  <button id="sbtn">&#8594;</button>
 </div>
 </div>
 <script>
@@ -135,13 +143,13 @@ function tile(t){var e=document.createElement('button');e.className='tile'+(t.p?
 function tiles(arr,parent){var g=document.createElement('div');g.className='tile-grid';arr.forEach(function(t){g.appendChild(tile(t))});(parent||O().lastElementChild).appendChild(g)}
 
 function showWelcome(){
-add('<div class="ascii"><span class="aa">  ███████╗██╗  ██╗   ██╗ ██████╗ ███████╗\n  ██╔════╝██║  ╚██╗ ██╔╝██╔═══██╗██╔════╝\n  ███████╗██║   ╚████╔╝ ██║   ██║███████╗\n  ╚════██║██║    ╚██╔╝  ██║   ██║╚════██║\n  ███████║███████╗██║   ╚██████╔╝███████║\n  ╚══════╝╚══════╝╚═╝    ╚═════╝ ╚══════╝</span>\n  <span class="aw" style="font-size:14px;letter-spacing:4px;margin-left:2px">SLYOS - PITCH</span>\n  <span class="b-d">Edge AI for Heavy Industry. Absolute operational resilience.</span></div>'+
+add('<div class="ascii"><span class="aa">  ███████╗██╗  ██╗   ██╗ ██████╗ ███████╗\n  ██╔════╝██║  ╚██╗ ██╔╝██╔═══██╗██╔════╝\n  ███████╗██║   ╚████╔╝ ██║   ██║███████╗\n  ╚════██║██║    ╚██╔╝  ██║   ██║╚════██║\n  ███████║███████╗██║   ╚██████╔╝███████║\n  ╚══════╝╚══════╝╚═╝    ╚═════╝ ╚══════╝</span>\n  <span class="aw" style="font-size:14px;letter-spacing:4px;margin-left:2px">Edge AI for Heavy Industry</span>\n  <span class="b-d">Absolute operational resilience. Zero connectivity fails.</span></div>'+
 '<div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:6px"><span class="st"><span class="st-v" style="color:var(--accent)">$1.0M Pre-Seed</span></span><span class="st"><span class="st-v">Palo Alto / Stanford</span></span><span class="st"><span class="st-v" style="color:var(--green)">Raising</span></span></div><hr class="d"><p class="dm" style="font-size:10px;margin-bottom:4px">Explore the deck:</p>');
 tiles([
-  {cmd:'problem',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Problem',d:'Cloud AI fails in the field'},
-  {cmd:'solution',icon:'&#9670;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Solution',d:'SlyOS middleware & architecture',p:1},
-  {cmd:'market',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'The Market',d:'Downtime ROI, TAM & landscape'},
-  {cmd:'execution',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'The Playbook',d:'LOI strategy & the $1M ask',p:1},
+  {cmd:'problem',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Problem',d:'Cloud AI fails in the field'},
+  {cmd:'solution',icon:'&#9670;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Solution',d:'SlyOS middleware & architecture',p:1},
+  {cmd:'market',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'The Market',d:'Downtime ROI, TAM & landscape'},
+  {cmd:'execution',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'The Execution',d:'Team, Playbook & the $1M Ask',p:1},
 ]);
 var ex=document.createElement('div');ex.style.cssText='margin-top:8px;display:flex;flex-wrap:wrap;gap:4px';
 [{cmd:'contact',l:'contact us'},{cmd:'demo',l:'book a call'},{cmd:'paper',l:'research paper'},{cmd:'article',l:'press coverage'}].forEach(function(s){var b=document.createElement('button');b.className='sug';b.textContent=s.l;b.onclick=function(){go(s.cmd)};ex.appendChild(b)});
@@ -149,142 +157,136 @@ O().lastElementChild.appendChild(ex);sug(['clear']);O().scrollTop=O().scrollHeig
 
 // ═══ LEVEL 1: CATEGORY MENUS ═══
 function cmdProblem(){
-add('<h2>The Problem</h2><p>Cloud AI fails in the field. When an offshore worker loses connectivity, NPT skyrockets and centralized GPUs are wasted on chatbots.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+add('<h2>The Problem</h2><p>Cloud AI fails in the field. Every hour of downtime on an industrial site or oil rig costs <span style="color:#fff;font-weight:600">$500,000+</span>, and centralized GPUs are bottlenecked with generic NLP queries.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
 tiles([
-  {cmd:'bottleneck',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Connectivity Gap',d:'Why the cloud breaks offshore'},
-  {cmd:'offshore',icon:'&#9881;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Case: $500k NPT',d:'Bleeding money on downtime'},
-  {cmd:'compute',icon:'&#9733;',bg:'rgba(192,132,252,.12)',ic:'var(--purple)',l:'Case: GPU Crunch',d:'Wasting H100s on manuals'},
+  {cmd:'bottleneck',icon:'&#9888;',bg:'rgba(248,113,113,.12)',ic:'var(--red)',l:'The Field Fails',d:'Why cloud breaks in the dead-zone'},
+  {cmd:'offshore',icon:'&#9881;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Case: $500k NPT',d:'Bleeding money on unplanned downtime'},
+  {cmd:'compute',icon:'&#9733;',bg:'rgba(192,132,252,.12)',ic:'var(--purple)',l:'Case: GPU Crunch',d:'Wasting H100s on manual queries'},
 ]);sug(['↩ menu','clear'])}
 
 function cmdSolution(){
-add('<h2>The Solution</h2><p>SlyOS intercepts prompts at the SDK level and routes them to local silicon on rugged field devices. Cloud is a fallback, not the default.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+add('<h2>The Solution</h2><p>SlyOS intercepts prompts at the SDK level and routes them to local silicon on rugged field devices. The cloud is a fallback, not the default.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
 tiles([
-  {cmd:'product',icon:'&#9641;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Product',d:'Edge SDK + 1000-page RAG',p:1},
-  {cmd:'routing',icon:'&#8644;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'Smart Routing',d:'Decision engine rules'},
-  {cmd:'architecture',icon:'&#9881;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Under the Hood',d:'3-layer ecosystem'},
-  {cmd:'deploy',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Deploy in 60s',d:'Pipeline + code sample'},
+  {cmd:'product',icon:'&#9641;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'The Product',d:'Edge SDK + 1000-page RAG',p:1},
+  {cmd:'routing',icon:'&#8644;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'Smart Routing',d:'Decision engine rules per-prompt'},
+  {cmd:'architecture',icon:'&#9881;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Under the Hood',d:'3-layer industrial ecosystem'},
+  {cmd:'deploy',icon:'&#9654;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Deploy in 60s',d:'Pipeline + code sample'},
 ]);sug(['↩ menu','clear'])}
 
 function cmdMarket(){
-add('<h2>The Market</h2><p>Enterprise AI requires offline resilience. We capture this market with 93%+ margins by proving immediate ROI through downtime reduction.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+add('<h2>The Market</h2><p>Enterprise heavy industry AI requires offline resilience. We capture this with 93%+ margins by proving immediate downtime reduction ROI.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
 tiles([
-  {cmd:'economics',icon:'$',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Unit Economics',d:'NPT ROI vs $50k Pilot',p:1},
-  {cmd:'landscape',icon:'&#9776;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Landscape',d:'vs. Ollama, Zetic, RunAnywhere'},
-  {cmd:'moat',icon:'&#9733;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'Defensibility',d:'Why big tech can\'t replicate this'},
-  {cmd:'tam',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'TAM & Segments',d:'$468B across Heavy Industry'},
+  {cmd:'economics',icon:'$',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Unit Economics',d:'NPT ROI vs $50k Pilot',p:1},
+  {cmd:'landscape',icon:'&#9776;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Industrial Landscape',d:'vs. Ollama, Zetic, RunAnywhere'},
+  {cmd:'moat',icon:'&#9733;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'Defensibility',d:'Why big tech can\'t replicate this'},
+  {cmd:'tam',icon:'&#9670;',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'TAM & Heavy Segments',d:'$468B across industrial verticals'},
 ]);sug(['↩ menu','clear'])}
 
 function cmdExecution(){
-add('<h2>The 14-Month Playbook</h2><p>Enterprise B2B requires aggressive sequencing. You don\'t build and hope they buy; you get them to commit on paper, raise, and build exactly what they agreed to pay for.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
+add('<h2>The Execution</h2><p>Stanford/expert team. Validated by global industrial giants. Executing a perfect B2B playbook.</p><hr class="d"><p class="dm" style="font-size:10px">Select a section:</p>');
 tiles([
-  {cmd:'validation',icon:'1',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Phase 1: Validation',d:'Demo & secure non-binding LOI'},
-  {cmd:'raise',icon:'2',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'Phase 2: $1M Raise',d:'Fund the 6-month core build'},
-  {cmd:'build',icon:'3',bg:'rgba(192,132,252,.12)',ic:'var(--purple)',l:'Phase 3: Engineering',d:'Build exact LOI constraints'},
-  {cmd:'poc',icon:'4',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'Phase 4-5: POC & Expand',d:'$50k Pilot to Fleet Rollout',p:1},
+  {cmd:'team',icon:'&#9734;',bg:'rgba(255,255,255,.06)',ic:'var(--fg)',l:'Team & Advisors',d:'4 co-founders + strategic advisor'},
+  {cmd:'validation',icon:'&#10003;',bg:'rgba(74,222,128,.12)',ic:'var(--green)',l:'Global Validation',d:'Validated by Meta, Mercedes, Sogeti'},
+  {cmd:'playbook',icon:'G',bg:'rgba(96,165,250,.12)',ic:'var(--blue)',l:'14-Month Playbook',d:'LOI strategy, Gantt, $1M Ask',p:1},
+  {cmd:'gtm',icon:'&#9654;',bg:'rgba(255,77,0,.12)',ic:'var(--accent)',l:'GTM Strategy',d:'LOI-to-Fleet enterprise motion'},
 ]);sug(['↩ menu','clear'])}
 
 // ═══ LEVEL 2: CONTENT ═══
 function cmdBottleneck(){
-add('<h2>The Connectivity Bottleneck</h2>'+
-'<div class="mgrid"><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">1.</span> <span class="card-t">Offshore Dead-Zones</span><div class="card-d">Remote sites and oil rigs lack reliable Wi-Fi. Cloud-dependent apps break immediately.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">2.</span> <span class="card-t">600ms+ Lag</span><div class="card-d">Network round-trips kill real-time agentic workflows needed for diagnostics.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">3.</span> <span class="card-t">Enterprise IP Leakage</span><div class="card-d">Regulated infrastructure data and schematics cannot hit third-party servers.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">4.</span> <span class="card-t">HSE / Exposure Time</span><div class="card-d">Workers wait in extreme weather conditions while manual pages struggle to load.</div></div></div>'+
-'<div class="ascii">  <span class="aw">TODAY:</span> Field App --<span class="ar">100%</span>--> Worker --<span class="ar">100%</span>--> <span class="ar">Cloud API (Fails offline)</span>\n  <span class="aw">SLYOS:</span> Field App ----------> Worker --<span class="ag"> 90% local</span> / <span class="ab">10% cloud</span></div>');
+add('<h2>The Field Bottleneck</h2>'+
+'<div class="mgrid"><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">1.</span> <span class="card-t">Offshore Dead-Zones</span><div class="card-d">Oil rigs and remote industrial sites lack reliable internet. Cloud apps break immediately.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">2.</span> <span class="card-t">600ms+ Lag</span><div class="card-d">Network round-trips kill real-time agentic workflows needed for diagnostics.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">3.</span> <span class="card-t">Enterprise IP Leakage</span><div class="card-d">Proprietary schematics and operational data cannot hit third-party servers. Regulated industries blocked.</div></div><div class="card" style="border-color:rgba(248,113,113,.2)"><span style="color:var(--red);font-weight:700">4.</span> <span class="card-t">HSE Risk (Exposure)</span><div class="card-d">Technicians waste critical time in extreme weather searching for safety manual pages.</div></div></div>'+
+'<div class="ascii">  <span class="aw">TODAY:</span> Field App --<span class="ar">100%</span>--> User --<span class="ar">100%</span>--> <span class="ar">Cloud API (Fails offline)</span>\n  <span class="aw">SLYOS:</span> Field App ----------> User --<span class="ag"> 90% local</span> / <span class="ab">10% cloud</span></div>');
 sug(['offshore','compute','↩ problem','↩ menu','clear'])}
 
 function cmdOffshore(){
 add('<h2>Case: <span style="color:var(--green)">Offshore NPT</span></h2>'+
-'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-l">NPT Cost</span> <span class="st-v" style="color:var(--red)">$500,000/hr</span></span><span class="st"><span class="st-l">Connectivity</span> <span class="st-v" style="color:var(--red)">0%</span></span><span class="st"><span class="st-l">Time-to-Resolution</span> <span class="st-v" style="color:var(--green)">-30%</span></span></div>'+
-'<div class="ascii" style="text-align:center; padding:10px 0; font-weight:bold;">\n          <span class="aa pump-arm" style="line-height:1">,===____</span>\n        <span class="aa">/      ||</span>\n<span class="ab">≈≈≈≈≈≈≈≈</span><span class="aw">[######]</span><span class="ab">≈≈≈≈≈≈≈≈</span>\n        <span class="ar">|    |</span>\n        <span class="ar">|    |</span>\n</div>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-l">NPT Cost</span> <span class="st-v" style="color:var(--red)">$500,000/hr</span></span><span class="st"><span class="st-l">Wi-Fi</span> <span class="st-v" style="color:var(--red)">Disconnected</span></span><span class="st"><span class="st-l">Time-to-tools</span> <span class="st-v" style="color:var(--green)">-30%</span></span></div>'+
 '<p>If a compressor faults and your technician loses Wi-Fi, they are stuck. Every hour they spend walking back to the control room to search a PDF manual costs the company half a million dollars in Non-Productive Time (NPT).</p>'+
-'<div class="card" style="border-color:rgba(74,222,128,.2)"><span class="card-t" style="color:var(--green)">SlyOS Impact</span><div class="card-d">SlyOS puts an offline, reasoning AI directly on their existing iPad. They resolve faults 30% faster, stopping the bleed of costly downtime and directly improving HSE metrics.</div></div>');
+'<div class="card" style="border-color:rgba(74,222,128,.2)"><span class="card-t" style="color:var(--green)">SlyOS Impact</span><div class="card-d">Technician has zero-latency, offline reasoning AI on their existing iPad. They troubleshoot immediately, finish 30% faster, and get back inside. Directly improves HSE metrics.</div></div>');
 sug(['compute','unit economics','↩ problem','↩ menu','clear'])}
 
 function cmdCompute(){
-add('<h2>Case: <span style="color:var(--purple)">GPU Bottleneck</span></h2>'+
-'<p>The energy sector is facing a massive AI compute crunch, with data center GPUs (like H100s) seeing <span style="color:#fff;font-weight:600">36-to-52-week lead times</span>. Centralized supercomputers must be reserved for high-value tasks.</p>'+
-'<div class="mgrid"><div class="card"><span class="card-t">Centralized Waste</span><div class="card-d">It is a massive waste of energy and expensive compute to use a Houston server farm to answer a chatbot question about a safety manual.</div></div><div class="card"><span class="card-t">Seismic Priority</span><div class="card-d">O&G companies need their GPUs for 3D seismic imaging and complex reservoir simulation.</div></div></div>'+
-'<div class="card" style="border-color:rgba(96,165,250,.2)"><span class="card-t" style="color:var(--blue)">SlyOS Impact</span><div class="card-d">SlyOS offloads 90% of NLP compute directly to the edge, freeing up your centralized GPUs for high-value reservoir modeling.</div></div>');
+add('<h2>Case: <span style="color:var(--purple)">GPU Crunch</span></h2>'+
+'<p>Data center GPUs like H100s have <span style="color:#fff;font-weight:600">36-to-52-week lead times</span>. Heavy industry must save their centralized compute for high-value tasks.</p>'+
+'<div class="mgrid"><div class="card"><span class="card-t">Centralized Waste</span><div class="card-d">Wasting energy and expensive H100 compute farm resources to answer a chatbot question about a safety manual.</div></div><div class="card"><span class="card-t">High-Value Priority</span><div class="card-d">Data centers needed for 3D seismic imaging and complex reservoir simulation, not manual lookups.</div></div></div>'+
+'<div class="card" style="border-color:rgba(96,165,250,.2)"><span class="card-t" style="color:var(--blue)">SlyOS Impact</span><div class="card-d">SlyOS offloads 90% of NLP compute directly to the edge NPU, freeing up centralized GPUs for reservoir modeling.</div></div>');
 sug(['offshore','the product','↩ problem','↩ menu','clear'])}
 
 function cmdProduct(){
 add('<h2>The Product: Offline RAG</h2>'+
-'<p>While massive corporate databases require hybrid routing, <span class="hl">a 1,000-page safety manual</span> runs entirely offline on the edge.</p>'+
-'<div class="ascii">  App -----> <span class="ag">Field iPad (SlyOS)</span> --<span class="ag">INT4 Local LLM</span>--> <span class="ag">15-45 tokens/sec</span>\n                               \\--<span class="ab">Cloud Sync</span>----> <span class="ab">when Wi-Fi restores</span></div>'+
-'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v" style="color:var(--green)">10-100MB footprint</span></span><span class="st"><span class="st-v" style="color:var(--green)">&lt;50ms UFS load</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Zero dead-zone downtime</span></span></div>'+
+'<p>Massive knowledge bases require hybrid routing, but <span class="hl">a 1,000-page safety manual</span> context fits entirely offline on the edge.</p>'+
+'<div class="ascii">  App -----> <span class="ag">Field iPad (SlyOS)</span> --<span class="ag">INT4 Local LLM</span>----> <span class="ag">15-45 tokens/sec</span>\n                    \\--<span class="ab">Retrieval</span>----> <span class="ag">&lt;50ms DB Load</span>\n                    \\--<span class="ab">Sync</span>----> <span class="ab">Cloud Fallback (online)</span></div>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v" style="color:var(--green)">10-100MB footprint</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Zero dead-zone failure</span></span><span class="st"><span class="st-v" style="color:var(--blue)">NPU optimized INT4</span></span></div>'+
 '<div class="cb"><span class="kw">const</span> agent = <span class="kw">await</span> <span class="fn">SlyOS.init</span>(<span class="str">"quantum-3B-int4"</span>);\n<span class="kw">await</span> agent.<span class="fn">loadLocalRAG</span>(<span class="str">"compressor-manual-v2"</span>);\n<span class="kw">const</span> result = <span class="kw">await</span> agent.<span class="fn">ask</span>(<span class="str">"Fault code 402?"</span>);</div>');
 sug(['smart routing','under the hood','deploy in 60s','↩ solution','↩ menu','clear'])}
 
 function cmdRouting(){
 add('<h2>Smart Traffic Routing</h2><p class="dm">The Decision Engine applies absolute rules + smart balancing per-prompt.</p>'+
-'<div class="mgrid"><div class="card"><span class="card-m">ALWAYS LOCAL</span><div class="card-d" style="margin-top:4px">No Wi-Fi / Dead-zone &#8594; iPad<br>Proprietary schematics &#8594; iPad<br>1000-page manuals &#8594; iPad</div></div><div class="card"><span class="card-m">CLOUD FALLBACK</span><div class="card-d" style="margin-top:4px">Massive seismic data &#8594; cloud<br>Device overheating &#8594; cloud<br>All rules customizable via dashboard</div></div></div>');
+'<div class="mgrid"><div class="card"><span class="card-m">ALWAYS LOCAL</span><div class="card-d" style="margin-top:4px">No Wi-Fi / Dead-zone &#8594; iPad<br>Proprietary schematics &#8594; iPad<br>1000-page safety manuals &#8594; iPad</div></div><div class="card"><span class="card-m">CLOUD FALLBACK</span><div class="card-d" style="margin-top:4px">Massive seismic data &#8594; cloud<br>Device overheating &#8594; cloud<br>All rules customizable via dashboard</div></div></div>');
 sug(['the product','under the hood','↩ solution','↩ menu','clear'])}
 
 function cmdArchitecture(){
 add('<h2>Under the Hood</h2>'+
-'<div class="card" style="border-style:dashed"><span class="card-m">CLOUD DASHBOARD</span><div class="card-d">Enterprise data sync (when connectivity is restored) + global fleet analytics.</div></div>'+
+'<div class="card" style="border-style:dashed"><span class="card-m">CLOUD DASHBOARD</span><div class="card-d">Enterprise fleet analytics + secure data sync. We never store user queries.</div></div>'+
 '<p style="text-align:center;color:var(--dim);margin:2px 0">&#8595;&#8593;</p>'+
 '<div class="card" style="border-color:rgba(255,77,0,.3);background:rgba(255,77,0,.03)"><span class="card-m" style="color:var(--accent)">SLYOS ENGINE</span><div class="card-d">Write Once, Run Anywhere (iOS/Android/Web). Smart traffic cop decides local vs. cloud per-prompt. Instant local vector DB swapping in &lt;50ms.</div></div>'+
 '<p style="text-align:center;color:var(--dim);margin:2px 0">&#8595;&#8593;</p>'+
-'<div class="card"><span class="card-m">RUGGED FIELD DEVICE</span><div class="card-d">Device health checks (battery, memory, temp). Native integration with existing field iPads and tablets. Under 100MB per manual.</div></div>');
+'<div class="card"><span class="card-m">RUGGED FIELD DEVICE</span><div class="card-d">Device health checks (battery, memory, temp). Native integration with rugged field iPads/tablets. Under 100MB per manual context.</div></div>');
 sug(['the product','smart routing','↩ solution','↩ menu','clear'])}
 
 function cmdDeploy(){
 add('<h2>From 0 to Generation in &lt;60s</h2>'+
-'<div class="ascii">  <span class="aw">SELECT</span> ---> <span class="aw">SYNC</span> ---> <span class="aa">DEFINE</span> ---> <span class="aw">PLUG</span> ---> <span class="ag">LIVE</span>\n  1-Click    Auto-     Smart      NPM/        Generation\n  Import     Finetune  Logic      CocoaPods   <span class="ag">Active</span></div>'+
+'<div class="ascii">  <span class="aw">SELECT</span> ---> <span class="aw">SYNC</span> ---> <span class="aa">DEFINE</span> ---> <span class="aw">PLUG</span> ---> <span class="ag">LIVE</span>\n  1-Click   Auto-     Smart     NPM/        Generation\n  Import    Finetune  Logic     CocoaPods   <span class="ag">Active</span></div>'+
 '<div class="bar-wrap"><div class="bar-label"><span>0s</span><span style="color:var(--green)">60s &#10003;</span></div><div class="bar" style="height:8px"><div class="bar-fill" data-w="100%" style="background:linear-gradient(90deg,var(--accent),var(--green))"></div></div></div>'+
 '<p style="margin-top:6px;font-size:11px">Or scaffold a full chatbot instantly: <code>npx @belto/create-local-chat</code></p>');
 sug(['the product','under the hood','↩ solution','↩ menu','clear'])}
 
 function cmdEconomics(){
-add('<h2>Unit Economics & ROI</h2>'+
-'<div class="mgrid" style="grid-template-columns:1fr 1fr 1fr"><div class="card"><span class="tag tag-red">STATUS QUO</span><div style="color:var(--fg);font-size:16px;font-weight:700;margin:4px 0">$500k/hr</div><div class="card-m">NPT Cost</div><div class="card-d">Worker offline downtime bleeding capital.</div></div><div class="card" style="border-color:rgba(96,165,250,.3)"><span class="tag tag-blue">SLYOS PILOT</span><div style="color:var(--blue);font-size:16px;font-weight:700;margin:4px 0">$50,000</div><div class="card-m">45-Day Paid POC</div><div class="card-d">Prove offline manual querying &lt;3s.</div></div><div class="card" style="border-color:rgba(74,222,128,.3)"><span class="tag tag-green">ENTERPRISE</span><div style="color:var(--green);font-size:16px;font-weight:700;margin:4px 0">$150k+/yr</div><div class="card-m">Fleet-wide licensing</div><div class="card-d">Multi-year contract covering 5,000 devices.</div></div></div>'+
-'<p class="dm" style="font-size:9px">Saving $10k on APIs is a rounding error to Chevron. Eliminating downtime is their biggest priority.</p>');
+add('<h2>Unit Economics & Downtime ROI Arbitrage</h2>'+
+'<p class="dm">Wasting $10,000 on API fees is a rounding error to industrial giants. Wasting money due to an idle worker is a nightmare.</p>'+
+'<div class="mgrid" style="grid-template-columns:1fr 1fr 1fr"><div class="card"><span class="tag tag-red">STATUS QUO</span><div style="color:var(--fg);font-size:16px;font-weight:700;margin:4px 0">$500,000/hr</div><div class="card-m">NPT Cost</div><div class="card-d">Technician offline in dead-zone bleeding capital.</div><div style="margin-top:6px;color:var(--red);font-weight:700;font-size:14px">ROI: Negligible</div></div><div class="card" style="border-color:rgba(96,165,250,.3)"><span class="tag tag-blue">SLYOS PILOT</span><div style="color:var(--blue);font-size:16px;font-weight:700;margin:4px 0">$50,000</div><div class="card-m">45-Day Paid POC</div><div class="card-d">Verify offline manual query &lt;3s.</div><div style="margin-top:6px;color:var(--green);font-weight:700;font-size:14px">ROI: 1 Downtime Hour Saved</div></div><div class="card" style="border-color:rgba(74,222,128,.3)"><span class="tag tag-green">ENTERPRISE</span><div style="color:var(--green);font-size:16px;font-weight:700;margin:4px 0">$150k+/yr</div><div class="card-m">Fleet-wide Licensing</div><div class="card-d">Multi-year contract covering 5,000 devices.</div><div style="margin-top:6px;color:var(--green);font-weight:700;font-size:14px">ROI: Massive Savings</div></div></div>');
 sug(['tam','landscape','↩ market','↩ menu','clear'])}
 
 function cmdLandscape(){
-add('<h2>Competitive Landscape</h2>'+
-'<table class="tbl"><thead><tr><th>Capability</th><th>Ollama</th><th>Zetic</th><th>RunAnywhere</th><th class="hl-col" style="color:var(--blue)">SlyOS</th></tr></thead><tbody><tr><td>Local Model Execution</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Hardware Acceleration</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Cloud-to-Edge Routing</td><td class="dsh">—</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Multi-Device Orchestration</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Rugged Device Mgmt</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Offline Context Swapping</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr></tbody></table>'+
-'<p class="dm" style="font-size:10px">Competitors run models. <span style="color:#fff">SlyOS deploys, manages, and monitors</span> edge AI across millions of disconnected devices.</p>');
+add('<h2>Industrial Competitive Landscape</h2>'+
+'<table class="tbl"><thead><tr><th>Capability</th><th>Ollama</th><th>Zetic</th><th>RunAnywhere</th><th class="hl-col" style="color:var(--blue)">SlyOS</th></tr></thead><tbody><tr><td>Local Model Execution</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Hardware Acceleration</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Cloud-to-Edge Routing</td><td class="dsh">—</td><td class="dsh">—</td><td class="chk">&#10003;</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Rugged Device Mgmt</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr><tr><td>Offline Context Swapping (&lt;50ms)</td><td class="dsh">—</td><td class="dsh">—</td><td class="dsh">—</td><td class="hl-col chk">&#10003;</td></tr></tbody></table>'+
+'<p class="dm" style="font-size:10px">Competitors run models. <span style="color:#fff">SlyOS deploys, manages, and monitors</span> edge AI across millions of disconnected rugged devices.</p>');
 sug(['moat','economics','↩ market','↩ menu','clear'])}
 
 function cmdMoat(){
-add('<h2>Defensibility Moat</h2><p class="dm">Why big tech can\'t replicate this.</p>'+
-'<div class="vs"><div class="vs-col" style="background:rgba(255,255,255,.01)"><div style="font-size:9px;color:var(--dim);text-transform:uppercase;font-weight:600;margin-bottom:4px">MISCONCEPTION</div><div style="color:#fff;font-weight:600;font-size:11px">"Apple & Google will own edge AI."</div><div class="card-d" style="margin-top:4px">Siri/Gemini are OS-level consumer assistants. They force devs to surrender UX and data.</div></div><div class="vs-col" style="background:rgba(255,77,0,.02)"><div style="font-size:9px;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:4px">SLYOS REALITY</div><div style="color:#fff;font-weight:600;font-size:11px">Enterprises want isolated, embedded AI.</div><div class="card-d" style="margin-top:4px;color:var(--accent)">SlyOS operates inside the app boundary. O&G companies keep 100% data ownership on their rugged devices.</div></div></div>'+
-'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-v">Cross-platform parity</span></span><span class="st"><span class="st-v">Zero data leakage</span></span><span class="st"><span class="st-v">Native UX ownership</span></span></div>');
+add('<h2>Defensibility Moat</h2><p class="dm">Why big tech can\'t replicate industrial edge AI.</p>'+
+'<div class="vs"><div class="vs-col" style="background:rgba(255,255,255,.01)"><div style="font-size:9px;color:var(--dim);text-transform:uppercase;font-weight:600;margin-bottom:4px">MISCONCEPTION</div><div style="color:#fff;font-weight:600;font-size:11px">"Apple & Google will own edge AI."</div><div class="card-d" style="margin-top:4px">Consumer assistants Siri/Gemini force devs to surrender UX and data, only for light consumer tasks.</div></div><div class="vs-col" style="background:rgba(255,77,0,.02)"><div style="font-size:9px;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:4px">SLYOS REALITY</div><div style="color:#fff;font-weight:600;font-size:11px">Enterprises want isolated, embedded, operational AI.</div><div class="card-d" style="margin-top:4px;color:var(--accent)">SlyOS operates inside the app boundary. Industrial giants retain 100% data ownership on their rugged devices.</div></div></div>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-v">Isolated, Air-gapped AI</span></span><span class="st"><span class="st-v">Zero Data Leakage</span></span><span class="st"><span class="st-v">Deep Industrial Integration</span></span></div>');
 sug(['landscape','tam','↩ market','↩ menu','clear'])}
 
 function cmdTAM(){
 add('<h2>TAM & Market Segments</h2>'+
 '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><span class="st"><span class="st-l">TAM</span> <span class="st-v" style="color:var(--blue);font-size:14px">$468B</span></span><span class="st"><span class="st-l">target ARR</span> <span class="st-v" style="color:var(--blue);font-size:14px">$10B</span></span><span class="st"><span class="st-l">NPU units</span> <span class="st-v">143M+ shipping</span></span></div>'+
-'<table class="tbl"><thead><tr><th>Vertical</th><th>Targets</th><th>Edge Unlock</th></tr></thead><tbody><tr><td style="color:#fff;font-weight:600">Oil & Gas</td><td><span class="tag tag-ok">Chevron</span><span class="tag tag-ok">Exxon</span></td><td>Offline rig diagnostics</td></tr><tr><td style="color:#fff;font-weight:600">Mining & Heavy Ind.</td><td><span class="tag tag-ok">BHP</span><span class="tag tag-ok">Rio Tinto</span></td><td>Zero-latency schematics</td></tr><tr><td style="color:#fff;font-weight:600">Defense & Aero</td><td><span class="tag tag-blue">Lockheed</span><span class="tag tag-blue">Boeing</span></td><td>Secure air-gapped AI</td></tr><tr><td style="color:#fff;font-weight:600">Mobility</td><td><span class="tag tag-soon">Tesla</span><span class="tag tag-soon">Ford</span></td><td>Real-time hardware access</td></tr></tbody></table>'+
-'<p class="dm" style="font-size:10px">TAM focuses heavily on heavy industry, field ops, and disconnected environments.</p>');
+'<table class="tbl"><thead><tr><th>Vertical</th><th>Targets</th><th>Industrial Unlock</th></tr></thead><tbody><tr><td style="color:#fff;font-weight:600">Oil & Gas / Mining</td><td><span class="tag tag-ok">Chevron</span><span class="tag tag-ok">Exxon</span><span class="tag tag-ok">BHP</span></td><td>Offline rig diagnostics, reduced NPT</td></tr><tr><td style="color:#fff;font-weight:600">Defense & Aero</td><td><span class="tag tag-blue">Lockheed</span><span class="tag tag-blue">Boeing</span></td><td>Air-gapped secure AI contexts</td></tr><tr><td style="color:#fff;font-weight:600">Mobility</td><td><span class="tag tag-soon">Tesla</span><span class="tag tag-soon">Ford</span></td><td>Offline navigation & telematics</td></tr><tr><td style="color:#fff;font-weight:600">Manufacturing</td><td><span class="tag tag-soon">Siemens</span><span class="tag tag-soon">GE</span></td><td>Zero-latency schematics</td></tr></tbody></table>');
 sug(['economics','landscape','↩ market','↩ menu','clear'])}
 
-function cmdValidation(){
-add('<h2>Phase 1: The "Vaporware" LOI (Months 1-2)</h2>'+
-'<p>We do not need a finished O&G product to get an LOI. We use our Tesla MCU3 demo to prove technical feasibility to internal IT/App teams at O&G companies.</p>'+
-'<div class="card" style="border-color:rgba(255,255,255,.2)"><span class="card-t">The Pitch to VP of Engineering</span><div class="card-d">"Look what we did to a locked-down car. We can do the exact same thing to your field iPads so your RAG manuals work offline."</div></div>'+
-'<div class="card" style="border-color:rgba(74,222,128,.2)"><span class="card-t" style="color:var(--green)">The Goal</span><div class="card-d">A non-binding Letter of Intent (LOI) stating: <em>"If SlyOS can achieve X latency on Y hardware offline, we will run a Paid POC for $50k."</em></div></div>');
-sug(['raise','build','poc','↩ execution','↩ menu','clear'])}
+function cmdTeam(){
+add('<h2>The Team & Validation</h2>'+
+'<div class="card" style="border-style:dashed"><span class="card-m">4 CO-FOUNDERS</span><div class="card-d">Palo Alto / Stanford-based deep tech experts. Placeholder generic co-founder details. Placeholder generic co-founder details. Placeholder generic co-founder details. Placeholder generic co-founder details.</div></div>'+
+'<div class="card"><span class="card-m">STRATEGIC ADVISOR</span><div class="card-d">Generic advisor placeholder details. Generic advisor placeholder details. Generic advisor placeholder details. Generic advisor placeholder details.</div></div>'+
+'<p class="dm">Validation from global industrial and tech giants:</p>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v">Meta</span></span><span class="st"><span class="st-v">Mercedes</span></span><span class="st"><span class="st-v">Sogeti</span></span></div>');
+sug(['validation','playbook','↩ execution','↩ menu','clear'])}
 
-function cmdRaise(){
-add('<h2>Phase 2: The Pre-Seed Raise (Months 3-4)</h2>'+
-'<p>With the LOI signed, we pitch deep-tech and B2B VCs with a bulletproof narrative.</p>'+
-'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"><span class="st"><span class="st-v" style="color:var(--blue)">Stanford Team</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Hardware Proof</span></span><span class="st"><span class="st-v" style="color:var(--blue)">Signed LOI</span></span></div>'+
-'<div class="card" style="border-color:rgba(96,165,250,.2)"><span class="card-t" style="color:var(--blue)">The VC Pitch</span><div class="card-d">"We have a Stanford/expert team, hard technical proof (Tesla demo), and a signed LOI from an O&G Company waiting for the tech. We are raising $1M to fund the 6-month build."</div></div>');
-sug(['validation','build','poc','↩ execution','↩ menu','clear'])}
+function cmdPlaybook(){
+add('<h2>14-Month Deep-Tech O&G Playbook</h2><p class="dm">We don\'t build and hope they buy; we secure commitment, raise, and build exactly what they agreed to pay for.</p>'+
+'<div class="cb" style="font-size:9px;line-height:1.2">MONTH               |1|2|3|4|5|6|7|8|9|10|11|12|13|14\n--------------------|-|-|-|-|-|-|-|-|-|--|--|--|--|--\nPHASE 1: VALIDATION |█|█| | | | | | | |  |  |  |  |  \n  (LOI strategy, walk in with Tesla demo)\nPHASE 2: FUNDRAISE  | | |█|█| | | | | |  |  |  |  |  \n  (Raise $1M Pre-Seed to fund core build)\nPHASE 3: ENGINEERING| | | | |█|█|█|█|█|  |  |  |  |  \n  (Heads down core SDK build. Do not overbuild.)\nPHASE 4: PAID POC   | | | | | | | | | |█ |█ |  |  |  \n  (Deploy $50k 45-day POC with binary success criteria)\nPHASE 5: EXPAND     | | | | | | | | | |  |  |█ |█ |█ \n  (Convert to multi-year, six-figure enterprise contract)</div>'+
+'<div class="card" style="border-color:rgba(255,77,0,.2)"><span class="tag tag-blue">THE MOVE NOW</span><div class="card-d">Next 4 weeks: Only Phase 1. Don\'t write O&G specific code. Use Tesla MCU hack to get on Zoom calls with VP of Engineering or Head of IT at O&G service companies. Secure the non-binding Letter of Intent (LOI).</div></div>');
+sug(['gtm','ask','validation','↩ execution','↩ menu','clear'])}
 
-function cmdBuild(){
-add('<h2>Phase 3: Heads Down Build (Months 5-9)</h2>'+
-'<p>We take the VC money and build the core SlyOS SDK. We do not overbuild. We build <span style="color:#fff;font-weight:600">exactly the constraints outlined in the LOI</span> success criteria. Nothing more.</p>'+
-'<div class="mgrid"><div class="card"><span class="card-t">Core Routing</span><div class="card-d">Engine that intercepts requests and forces local NPU execution.</div></div><div class="card"><span class="card-t">Memory Opt</span><div class="card-d">Ensure 1000-page RAG footprints stay within 10-100MB on UFS 4.0.</div></div><div class="card"><span class="card-t">SDK API</span><div class="card-d">Clean, plug-and-play integration for existing iOS/Android enterprise apps.</div></div></div>');
-sug(['validation','raise','poc','↩ execution','↩ menu','clear'])}
-
-function cmdPOC(){
-add('<h2>Phase 4 & 5: Paid POC to Fleet Rollout</h2>'+
-'<p>Never do a free pilot in enterprise. If they aren\'t willing to pay $30k–$50k for a 45-day POC, they don\'t actually have the budget for a full rollout.</p>'+
-'<div class="cb" style="font-size:9px">MONTH               |1|2|3|4|5|6|7|8|9|10|11|12|13|14\n--------------------|-|-|-|-|-|-|-|-|-|--|--|--|--|--\nPHASE 1: VALIDATION |█|█| | | | | | | |  |  |  |  |  \nPHASE 2: FUNDRAISE  | | |█|█| | | | | |  |  |  |  |  \nPHASE 3: ENGINEERING| | | | |█|█|█|█|█|  |  |  |  |  \nPHASE 4: PAID POC   | | | | | | | | | |█ |█ |  |  |  \nPHASE 5: EXPAND     | | | | | | | | | |  |  |█ |█ |█ </div>'+
-'<div class="card" style="border-color:rgba(255,77,0,.2)"><span class="card-t" style="color:var(--accent)">Binary Success Criteria</span><div class="card-d">"The SDK queries a 1,000-page manual in &lt; 3 seconds offline without crashing the iPad." Once passed, the $50k pilot converts into a multi-year, six-figure enterprise licensing contract.</div></div>');
-sug(['validation','raise','build','↩ execution','↩ menu','clear'])}
+function cmdAsk(){
+add('<h2>The Ask: $1M Pre-Seed</h2>'+
+'<div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0"><span class="st"><span class="st-v" style="color:var(--accent)">Stanford Team</span></span><span class="st"><span class="st-v" style="color:var(--accent)">Tesla Demo Proof</span></span><span class="st"><span class="st-v" style="color:var(--accent)">Signed LOI</span></span></div>'+
+'<p class="dm">Raising capital and building exact constraints outlined in the industrial LOI success criteria. Capital allocation:</p>'+
+'<div class="bar-wrap"><div class="bar-label"><span>Heads Down Engineering (6 months)</span><span style="color:var(--green)">75%</span></div><div class="bar" style="height:8px"><div class="bar-fill" data-w="75%" style="background:var(--accent)"></div></div></div>'+
+'<div class="bar-wrap"><div class="bar-label"><span>B2B Market & Legal</span><span style="color:var(--green)">15%</span></div><div class="bar" style="height:8px"><div class="bar-fill" data-w="15%" style="background:var(--cyan)"></div></div></div>'+
+'<div class="bar-wrap"><div class="bar-label"><span>Operations</span><span style="color:var(--green)">10%</span></div><div class="bar" style="height:8px"><div class="bar-fill" data-w="10%" style="background:var(--dim)"></div></div></div>');
+sug(['validation','team','↩ execution','↩ menu','clear'])}
 
 // ═══ ROUTER ═══
 function go(cmd){
@@ -309,11 +311,12 @@ function go(cmd){
     else if(cmd==='economics'||cmd==='unit economics') cmdEconomics();
     else if(cmd==='landscape') cmdLandscape();
     else if(cmd==='moat'||cmd==='defensibility') cmdMoat();
-    else if(cmd==='tam'||cmd==='tam & segments') cmdTAM();
-    else if(cmd==='validation'||cmd==='phase 1: validation') cmdValidation();
-    else if(cmd==='raise'||cmd==='phase 2: raise') cmdRaise();
-    else if(cmd==='build'||cmd==='phase 3: build') cmdBuild();
-    else if(cmd==='poc'||cmd==='phase 4-5: poc & expand'||cmd==='phase 4: poc') cmdPOC();
+    else if(cmd==='tam'||cmd==='tam & heavy segments') cmdTAM();
+    else if(cmd==='validation') {add('<h2>Validation</h2><p class="dm">Generic validation placeholder details. Generic validation placeholder details. Generic validation placeholder details.</p>'); sug(['playbook','↩ execution','clear']);}
+    else if(cmd==='playbook'||cmd==='14-month playbook') cmdPlaybook();
+    else if(cmd==='ask'||cmd==='the ask'||cmd==='the ask: $1m pre-seed') cmdAsk();
+    else if(cmd==='team'||cmd==='team & advisors') cmdTeam();
+    else if(cmd==='gtm'||cmd==='gtm strategy') {add('<h2>GTM Strategy</h2><p class="dm">Heads-down validation motion followed by capital raise to fund core SDK build. Deploy $50k Paid POCs to prove offline performance before full fleet rollout.</p>'); sug(['playbook','↩ execution','clear']);}
     else {
       add('Command not found: '+cmd+'. Type <span class="hl">menu</span> to start over.');
       sug(['menu','clear']);
